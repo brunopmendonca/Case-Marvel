@@ -18,6 +18,8 @@ const hash = md5(time + chavePrivada + chavePublica)
 const TelaDoUsuario = () => {
 
     const [dados, setDados] = useState([])
+    const [pesquisa, setPesquisa] = useState()
+    const [resultados, setResultados] = useState()
 
     useEffect(() => {
 
@@ -33,8 +35,44 @@ const TelaDoUsuario = () => {
 
     }, [])
 
-    const pushButton = () => {
-        console.log(dados)
+    const onChangeText = (e) => {
+
+        setPesquisa(e.target.value)
+        console.log(pesquisa)
+
+    }
+
+    const pushButton = (event) => {
+        {
+            dados.map(e => {
+                if (pesquisa == e.name)
+                    return (
+
+                        setResultados(<div className="card-heroi">
+                            <span className="nome-heroi">{e.name}</span>
+                            <img src={`${e.thumbnail.path}.${e.thumbnail.extension}`} alt="" />
+                            <button> Favoritos </button>
+                        </div>)
+
+                    )
+            })
+        }
+    }
+
+    const mostrarTodosHerois = (event) => {
+        let arquivo = []
+        dados.map(e => {
+            return (
+                arquivo.push(<div className="card-heroi">
+                    <span className="nome-heroi">{e.name}</span>
+                    <img src={`${e.thumbnail.path}.${e.thumbnail.extension}`} alt="" />
+                    <button> Favoritos </button>
+                </div>))
+
+        })
+
+        setResultados(arquivo)
+
     }
 
 
@@ -42,34 +80,40 @@ const TelaDoUsuario = () => {
 
     return (
 
-        <div>
+        <div className="tela-inteira">
 
             <div className="telaUsuario">
 
-                <h1>Bem Vindo !!</h1>
+                <h1>Bem Vindo!!</h1>
 
 
                 <div className="pesquisa" >
                     <h2>Digite aqui sua Comic</h2>
-                    <input placeholder="Digite sua Comic" />
-                    <button onClick={() => {
-                        pushButton()
+                    <input onInput={(e) => { onChangeText(e) }} type="text" placeholder="Digite sua Comic" />
+                    <button onClick={(event) => {
+                        pushButton(event)
                     }} > Pesquisar </button>
+                    <button onClick={(event) => {
+                        mostrarTodosHerois(event)
+                    }} > Mostrar todos os herois </button>
                 </div>
 
                 {/* <h1>{dados[0].name}</h1> */}
 
 
-                <ul>
-                    {dados.map(e => {
+                <div className="tela-cards">
+                    {/* {dados.map(e => {
                         return (
-                            <li>
-                                <h1>{e.name}</h1>
+                            <div className="card-heroi">
+                                <span className="nome-heroi">{e.name}</span>
                                 <img src={`${e.thumbnail.path}.${e.thumbnail.extension}`} alt="" />
-                            </li>
+                                <button> Favoritos </button>
+                            </div>
+
                         )
-                    })}
-                </ul>
+                    })} */}
+                    {resultados}
+                </div>
 
             </div>
 
