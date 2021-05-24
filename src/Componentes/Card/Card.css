@@ -1,0 +1,33 @@
+.cardGroup{
+    background-color:#ffff;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+   
+}
+
+.textGroup{
+    display: flex;
+    flex-direction: column;
+    padding: 5;
+}
+
+.text{
+   margin-top: 8px;
+   margin-bottom: 8px;
+}
+
+.title1{
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 20px;
+    margin-bottom: 8px;
+ }
+
+ .buttonAcess{
+    
+    display: flex;
+    justify-content: center;
+ }
