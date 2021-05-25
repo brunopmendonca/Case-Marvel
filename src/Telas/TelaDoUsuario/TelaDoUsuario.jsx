@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import "./TelaDoUsuario.css"
 
 import axios from 'axios'
@@ -14,11 +14,13 @@ const time = Number(new Date())
 const hash = md5(time + chavePrivada + chavePublica)
 
 
-const TelaDoUsuario = () => {
+const TelaDoUsuario = ({ match }) => {
 
     const [dados, setDados] = useState([])
     const [pesquisa, setPesquisa] = useState()
     const [resultados, setResultados] = useState()
+
+    const { id } = useParams()
 
     useEffect(() => {
 
@@ -41,6 +43,29 @@ const TelaDoUsuario = () => {
 
     }
 
+    const addFavoritos = async (numberId) => {
+
+        let response = await fetch("http://localhost:3001/adicionarFavorito", {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                userId: id,
+                numberId: numberId
+
+            })
+
+        }
+
+        )
+        let json = await response.json()
+        console.log(json)
+
+
+    }
+
     const pushButton = (event) => {
         {
             dados.map(e => {
@@ -50,7 +75,7 @@ const TelaDoUsuario = () => {
                         setResultados(<div className="card-heroi">
                             <span className="nome-heroi">{e.name}</span>
                             <img src={`${e.thumbnail.path}.${e.thumbnail.extension}`} alt="" />
-                            <button> Favoritos </button>
+                            <button onClick={() => { addFavoritos(e.id) }}> Favoritos </button>
                         </div>)
 
                     )
@@ -65,7 +90,7 @@ const TelaDoUsuario = () => {
                 arquivo.push(<div className="card-heroi">
                     <span className="nome-heroi">{e.name}</span>
                     <img src={`${e.thumbnail.path}.${e.thumbnail.extension}`} alt="" />
-                    <button onClick={(event) => { console.log(e.id) }}> Favoritos </button>
+                    <button onClick={() => { addFavoritos(e.id) }}> Favoritos </button>
                 </div>))
 
         })
@@ -77,8 +102,8 @@ const TelaDoUsuario = () => {
 
     let historia = useHistory()
 
-    const irParaFavoritos = () => {
-        historia.push("/favoritos", { nada: "nada" })
+    const irParaFavoritos = (id) => {
+        historia.push(`/favoritos/${id}`)
     }
 
 
@@ -90,12 +115,12 @@ const TelaDoUsuario = () => {
 
             <header className="menu">
                 <span >inicio</span>
-                <span onClick={() => { irParaFavoritos() }}>Meus Favoritos</span>
+                <span onClick={() => { irParaFavoritos(id) }}>Meus Favoritos</span>
             </header>
 
             <div className="telaUsuario">
 
-                <h1>Bem Vindo!!</h1>
+                <h1>Bem Vindo!! {id}</h1>
 
                 <div className="pesquisa" >
                     <h2>Digite aqui sua Comic</h2>

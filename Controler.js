@@ -10,39 +10,19 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 let user = models.User
-let favoritos = models.favoritos
+let favoritos = models.Favoritos
 
+app.post("/login", async (req, res) => {
 
-// ***********************************************************************************//
+    console.log(req.body)
 
-// logar usuario
-// app.post("/login", async (req, res) => {
+    let response = await user.findOne({
+        where: { name: req.body.name, password: req.body.password }
+    })
 
-//     console.log(req.body)
+    res.send(JSON.stringify(response))
 
-//     let response = await user.findOne({
-//         where: { name: req.body.name, password: req.body.password }
-//     })
-
-//     res.send(JSON.stringify(response))
-
-// })
-
-
-// Cadastrar usuario 
-// app.post("/verificarUsuario", async (req, res) => {
-
-//     let response = await user.findOne({
-//         where: { name: req.body.name }
-//     })
-
-//     if (response == null) {
-//         res.send(JSON.stringify("usuario Cadastrado"))
-//     } else (
-//         res.send(JSON.stringify("Nome de usuario ja existe"))
-//     )
-
-// })
+})
 
 app.post("/cadastro", async (req, res) => {
 
@@ -63,6 +43,43 @@ app.post("/cadastro", async (req, res) => {
     } else (
         res.send(JSON.stringify("ja possui cadastro"))
     )
+
+})
+
+app.post("/adicionarFavorito", async (req, res) => {
+
+    console.log(req.body)
+
+    let response = await favoritos.findOne({
+        where: { userId: req.body.userId, numberId: req.body.numberId }
+    })
+
+    if (response == null) {
+        res.send(JSON.stringify("cadastro feito com sucesso"))
+        let create = favoritos.create({
+            userId: req.body.userId,
+            numberId: req.body.numberId,
+            createdAt: "1",
+            updatedAt: "1"
+
+        })
+
+    } else (
+        res.send(JSON.stringify("ja esta adicionado aos favoritos"))
+    )
+
+})
+
+app.post("/mostrarFavoritos", async (req, res) => {
+
+    console.log(req.body)
+
+    let response = await favoritos.findOne({
+        where: { userId: req.body.userId }
+    }).then(response => {
+        res.send(JSON.stringify(response))
+    })
+
 
 })
 

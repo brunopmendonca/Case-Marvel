@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import "./style.css"
 
 import axios from 'axios'
@@ -13,71 +13,48 @@ const time = Number(new Date())
 const hash = md5(time + chavePrivada + chavePublica)
 
 
-const Favoritos = ({ route }) => {
+const Favoritos = ({ match }) => {
+
+
 
     const [dados, setDados] = useState([])
     const [pesquisa, setPesquisa] = useState()
     const [resultados, setResultados] = useState()
-    console.log(route)
 
-    useEffect(() => {
+    // const [favoritos, setFavoritos] = useState()
 
-        axios.get(`${baseUrl}ts=${time}&apikey=${chavePublica}&hash=${hash}`)
-            .then((response) => {
-                setDados(response.data.data.results)
-                console.log(dados)
+    const { id } = useParams()
 
-            })
-            .catch(err => {
-                console.log(err)
-            })
 
-    }, [])
+    function aparecerCard() {
 
-    const onChangeText = (e) => {
+        let response = fetch("http://localhost:3001/mostrarFavoritos", {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                userId: id,
 
-        setPesquisa(e.target.value)
-        console.log(pesquisa)
-
-    }
-
-    const pushButton = (event) => {
-        {
-            dados.map(e => {
-                if (pesquisa == e.name)
-                    return (
-
-                        setResultados(<div className="card-heroi">
-                            <span className="nome-heroi">{e.name}</span>
-                            <img src={`${e.thumbnail.path}.${e.thumbnail.extension}`} alt="" />
-                            <button> Favoritos </button>
-                        </div>)
-
-                    )
             })
         }
-    }
 
-    const mostrarTodosHerois = (event) => {
-        let arquivo = []
-        dados.map(e => {
-            return (
-                arquivo.push(<div className="card-heroi">
-                    <span className="nome-heroi">{e.name}</span>
-                    <img src={`${e.thumbnail.path}.${e.thumbnail.extension}`} alt="" />
-                    <button onClick={(event) => { console.log(e.id) }}> Favoritos </button>
-                </div>))
+        )
 
-        })
-
-        setResultados(arquivo)
+        let json = response.json()
+        setDados(json)
 
     }
+
+    aparecerCard()
+
+
 
     let historia = useHistory()
 
     const irParaTelaDoUsuario = () => {
-        historia.push("/telaDoUsuario")
+        historia.push(`/telaDoUsuario/${id}`)
     }
 
     return (
@@ -91,7 +68,7 @@ const Favoritos = ({ route }) => {
 
             <div className="telaUsuario">
 
-                <h1>Confira suas comics!</h1>
+                <h1>Confira suas comics!{dados} {id}</h1>
 
                 <div className="tela-cards">
                     {resultados}

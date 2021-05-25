@@ -16,9 +16,9 @@ const Routes = () => {
             <Switch>
 
                 <Route path="/" exact component={Login} />
-                <Route path="/cadastro" component={Cadastro} />
-                <Route path="/telaDoUsuario" component={TelaDoUsuario} />
-                <Route path="/favoritos" component={Favoritos} />
+                <Route path="/cadastro/:id" component={Cadastro} />
+                <Route path="/telaDoUsuario/:id" component={TelaDoUsuario} />
+                <Route path="/favoritos/:id" component={Favoritos} />
 
             </Switch>
 

@@ -1,5 +1,5 @@
 .tela-inteira{
-    background-color: red;
+    background-color:red;
   
 }
 
@@ -78,6 +78,7 @@
 .tela-cards{
 
     background-color: red; 
+
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -95,7 +96,7 @@
     background-color: #ffffff;
     display: flex;
     flex-direction: column;
-    width: 25%;
+    width: 20%;
     height: 300px;
     padding: 10px 5px 20px 5px;
     margin: 20px;

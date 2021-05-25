@@ -1,16 +1,32 @@
 import React, { useState } from 'react'
 import "./style.css"
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 // import { useState } from 'react'
 
 
-const Cadastro = () => {
+const Cadastro = ({ match }) => {
+
+    const { id } = useParams()
 
     let historia = useHistory()
+
 
     const [nome, setNome] = useState()
     const [senha, setSenha] = useState()
     const [confSenha, setConfSenha] = useState()
+
+
+    const campoNome = (e) => {
+        setNome(e.target.value)
+    }
+
+    const campoSenha = (e) => {
+        setSenha(e.target.value)
+    }
+
+    const campoConfSenha = (e) => {
+        setConfSenha(e.target.value)
+    }
 
     const irParaPerfil = () => {
         window.alert("Cadastro Feito Com Sucesso")
@@ -19,27 +35,28 @@ const Cadastro = () => {
 
     async function sendForm() {
 
-        let response = await fetch("http://localhost:3001/cadastro", {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                name: "bruno",
-                password: "123",
-                confirmacao: "123",
+        if (senha == confSenha) {
+            let response = await fetch("http://localhost:3001/cadastro", {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: nome,
+                    password: senha,
+                    confirmacao: confSenha,
 
-            })
+                })
 
-        }
+            }
 
-        )
+            )
+            let json = await response.json()
+            window.alert(json)
 
-        let json = await response.json()
-        console.log(json)
-        window.alert(json)
 
+        } else (window.alert("senhas nao conferem"))
 
     }
 
@@ -48,11 +65,11 @@ const Cadastro = () => {
 
         <div className="telaCadastro">
 
-            <h1>Cadastre -se </h1>
+            <h1>Cadastre -se {id} </h1>
             <div className="entradasCadastro" >
-                <input placeholder="Usuario" />
-                <input placeholder="Digite uma senha" />
-                <input placeholder="Digite a senha novamente" />
+                <input onInput={(e) => { campoNome(e) }} placeholder="Usuario" />
+                <input onInput={(e) => { campoSenha(e) }} placeholder="Digite uma senha" />
+                <input onInput={(e) => { campoConfSenha(e) }} placeholder="Digite a senha novamente" />
                 <button onClick={() => {
                     sendForm()
                 }}> Cadastrar </button>
