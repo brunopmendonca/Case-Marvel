@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import "./TelaDoUsuario.css"
+import "./style.css"
 
 import axios from 'axios'
 import md5 from 'md5'
-
 
 const baseUrl = "http://gateway.marvel.com/v1/public/characters?"
 const chavePublica = "1ea11679ab11b65382e9487268b363a7"
@@ -14,11 +13,12 @@ const time = Number(new Date())
 const hash = md5(time + chavePrivada + chavePublica)
 
 
-const TelaDoUsuario = () => {
+const Favoritos = ({ route }) => {
 
     const [dados, setDados] = useState([])
     const [pesquisa, setPesquisa] = useState()
     const [resultados, setResultados] = useState()
+    console.log(route)
 
     useEffect(() => {
 
@@ -74,42 +74,24 @@ const TelaDoUsuario = () => {
 
     }
 
-
     let historia = useHistory()
 
-    const irParaFavoritos = () => {
-        historia.push("/favoritos", { nada: "nada" })
+    const irParaTelaDoUsuario = () => {
+        historia.push("/telaDoUsuario")
     }
-
-
-
 
     return (
 
         <div className="tela-inteira">
 
             <header className="menu">
-                <span >inicio</span>
-                <span onClick={() => { irParaFavoritos() }}>Meus Favoritos</span>
+                <span>Meus Dados</span>
+                <span onClick={() => { irParaTelaDoUsuario() }}>Pesquisar Comic</span>
             </header>
 
             <div className="telaUsuario">
 
-                <h1>Bem Vindo!!</h1>
-
-                <div className="pesquisa" >
-                    <h2>Digite aqui sua Comic</h2>
-                    <input onInput={(e) => { onChangeText(e) }} type="text" placeholder="Digite sua Comic" />
-                    <button onClick={(event) => {
-                        pushButton(event)
-                    }} > Pesquisar </button>
-                    <button onClick={(event) => {
-                        mostrarTodosHerois(event)
-                    }} > Mostrar todos os herois </button>
-                </div>
-
-                {/* <h1>{dados[0].name}</h1> */}
-
+                <h1>Confira suas comics!</h1>
 
                 <div className="tela-cards">
                     {resultados}
@@ -124,4 +106,4 @@ const TelaDoUsuario = () => {
 
 }
 
-export default TelaDoUsuario
+export default Favoritos

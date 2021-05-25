@@ -1,7 +1,8 @@
 .telaCadastro{
    
     display: flex;
-    background: url('../../imagens/cadastro.jpeg') no-repeat bottom center scroll;
+  /*  background: url('../../imagens/cadastro.jpeg') no-repeat bottom center scroll;*/
+  background-color:rgb(37, 36, 36);
     background-size: cover;
     flex-direction: column;
     justify-content: center ;
@@ -17,7 +18,7 @@
 
 .entradasCadastro{
     display: flex;
-    background-color:rgba(8, 8, 8, 0.4);
+background-color: rgb(247, 245, 242);
     flex-direction: column;
     justify-content: space-around;
     width: 20%;
@@ -30,15 +31,23 @@
 .entradasCadastro input{
     padding: 5px;
     margin-top: 7px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid rgb(37, 36, 36);
+    
 }
 
 .entradasCadastro button{
-    background-color: red;
+    background-color: rgb(8, 138, 8);
+    box-shadow: none;
+    font-weight: bold;
     margin: 0 auto;
+    border: none;
+    border-radius: 10px;
     padding: 7px;
-    margin-top: 5px;
+    margin-top: 20px;
     width: 100%;
-    color: #fff;
+    color: rgb(37, 36, 36);
     
 }
 
