@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import "./style.css"
+import Modal from 'react-modal'
 
 import axios from 'axios'
 import md5 from 'md5'
@@ -15,20 +16,59 @@ const hash = md5(time + chavePrivada + chavePublica)
 
 const Favoritos = ({ match }) => {
 
-
-
     const [dados, setDados] = useState([])
     const [pesquisa, setPesquisa] = useState()
-    const [resultados, setResultados] = useState()
-
-    // const [favoritos, setFavoritos] = useState()
+    const [resultados, setResultados] = useState([])
+    const [banco, setBanco] = useState()
 
     const { id } = useParams()
+    let historia = useHistory()
+
+    const customStyles = {
+        content: {
+            width: '50%',
+            height: '50%',
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)'
+        }
+    };
+
+    Modal.setAppElement('#root')
+    var subtitle;
+
+    const [modalIsOpen, setIsOpen] = React.useState(false);
+    // function openModal() {
+    //     setIsOpen(true);
+    // }
+
+    function afterOpenModal() {
+        // references are now sync'd and can be accessed.
+        subtitle.style.color = '#f00';
+    }
+
+    function closeModal() {
+        setIsOpen(false);
+    }
+
+    useEffect(() => {
+
+        axios.get(`${baseUrl}ts=${time}&apikey=${chavePublica}&hash=${hash}`)
+            .then((response) => {
+                setDados(response.data.data.results)
+            })
+            .catch(err => {
+                console.log(err)
+            })
 
 
-    function aparecerCard() {
+    }, [])
 
-        let response = fetch("http://localhost:3001/mostrarFavoritos", {
+    useEffect(async () => {
+        let response = await fetch("http://localhost:3001/mostrarFavoritos", {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -38,20 +78,74 @@ const Favoritos = ({ match }) => {
                 userId: id,
 
             })
+
         }
 
         )
+        let json = await response.json()
+        // console.log(json)
+        setResultados(json)
 
-        let json = response.json()
-        setDados(json)
+
+    }, [])
+
+    const mostrarFavoritos = () => {
+        return (
+            resultados.map(e => {
+                return (
+                    (<div className="card-heroi">
+                        <span className="nome-heroi">{e.name}</span>
+                        <img onClick={() => { abrirModal(e.name, e.imagem, e.extensao, e.descricao) }} src={`${e.imagem}.${e.extensao}`} alt="" />
+                        <button onClick={() => { deletarFavoritos(e.numberId) }} > deletar </button>
+                    </div>))
+
+            })
+
+        )
 
     }
 
-    aparecerCard()
+
+    const abrirModal = (name, imagem, extensao, descricao) => {
+
+        setIsOpen(true);
+        setBanco(
+            <div className="modal">
+                <img className="modal-img" src={`${imagem}.${extensao}`} alt="" />
+                <div className=" nome-descricao">
+                    <span className="nome-heroi">{name}</span>
+                    <span>{descricao}</span>
+                    <button onClick={closeModal}>close</button>
+                </div>
+            </div>
+        )
+
+    }
+
+
+    const deletarFavoritos = async (numberId) => {
+        let response = await fetch("http://localhost:3001/deletarFavorito", {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                userId: id,
+                numberId: numberId
 
 
 
-    let historia = useHistory()
+            })
+
+        }
+
+        )
+        let json = await response.json()
+        // console.log(json)
+        setResultados(json)
+    }
+
 
     const irParaTelaDoUsuario = () => {
         historia.push(`/telaDoUsuario/${id}`)
@@ -68,12 +162,33 @@ const Favoritos = ({ match }) => {
 
             <div className="telaUsuario">
 
-                <h1>Confira suas comics!{dados} {id}</h1>
+                <h1>Confira suas comics!{id}</h1>
+
+                {/* <button onClick={() => { console.log(resultados) }}>teste</button> */}
 
                 <div className="tela-cards">
-                    {resultados}
+                    {mostrarFavoritos()}
                 </div>
 
+            </div>
+
+            <div>
+                {/* <button onClick={openModal}>Open Modal</button> */}
+                <Modal
+                    isOpen={modalIsOpen}
+                    onAfterOpen={afterOpenModal}
+                    onRequestClose={closeModal}
+                    style={customStyles}
+                    contentLabel="Example Modal"
+                >
+
+
+
+                    <h2 ref={_subtitle => (subtitle = _subtitle)}>Caracteristicas</h2>
+
+                    <div>{banco}</div>
+
+                </Modal>
             </div>
 
         </div>

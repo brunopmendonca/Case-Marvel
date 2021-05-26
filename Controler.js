@@ -57,6 +57,10 @@ app.post("/adicionarFavorito", async (req, res) => {
     if (response == null) {
         res.send(JSON.stringify("cadastro feito com sucesso"))
         let create = favoritos.create({
+            name: req.body.name,
+            imagem: req.body.imagem,
+            descricao: req.body.descricao,
+            extensao: req.body.extensao,
             userId: req.body.userId,
             numberId: req.body.numberId,
             createdAt: "1",
@@ -74,14 +78,31 @@ app.post("/mostrarFavoritos", async (req, res) => {
 
     console.log(req.body)
 
-    let response = await favoritos.findOne({
+    let response = await favoritos.findAll({
         where: { userId: req.body.userId }
     }).then(response => {
+        console.log(JSON.stringify(response))
         res.send(JSON.stringify(response))
     })
 
 
 })
+
+
+app.post("/deletarfavorito", async (req, res) => {
+
+    let deletar = await favoritos.destroy({
+        where: { numberId: req.body.numberId, userId: req.body.userId }
+    })
+
+    let update = await user.findByPk(req.body.userId, { include: [{ all: true }] }).then((response) => {
+        console.log(JSON.stringify(response.Favoritos))
+        res.send(JSON.stringify(response.Favoritos))
+    })
+
+
+})
+
 
 
 

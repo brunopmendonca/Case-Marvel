@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import "./TelaDoUsuario.css"
+import Modal from 'react-modal'
 
 import axios from 'axios'
 import md5 from 'md5'
@@ -19,8 +20,39 @@ const TelaDoUsuario = ({ match }) => {
     const [dados, setDados] = useState([])
     const [pesquisa, setPesquisa] = useState()
     const [resultados, setResultados] = useState()
+    const [banco, setBanco] = useState()
 
     const { id } = useParams()
+
+    const customStyles = {
+        content: {
+            width: '50%',
+            height: '50%',
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)'
+        }
+    };
+
+    Modal.setAppElement('#root')
+    var subtitle;
+
+    const [modalIsOpen, setIsOpen] = React.useState(false);
+    // function openModal() {
+    //     setIsOpen(true);
+    // }
+
+    function afterOpenModal() {
+        // references are now sync'd and can be accessed.
+        subtitle.style.color = '#f00';
+    }
+
+    function closeModal() {
+        setIsOpen(false);
+    }
 
     useEffect(() => {
 
@@ -43,7 +75,7 @@ const TelaDoUsuario = ({ match }) => {
 
     }
 
-    const addFavoritos = async (numberId) => {
+    const addFavoritos = async (numberId, name, imagem, descricao, extensao) => {
 
         let response = await fetch("http://localhost:3001/adicionarFavorito", {
             method: 'POST',
@@ -53,7 +85,11 @@ const TelaDoUsuario = ({ match }) => {
             },
             body: JSON.stringify({
                 userId: id,
-                numberId: numberId
+                numberId: numberId,
+                name: name,
+                imagem: imagem,
+                descricao: descricao,
+                extensao: extensao
 
             })
 
@@ -74,8 +110,8 @@ const TelaDoUsuario = ({ match }) => {
 
                         setResultados(<div className="card-heroi">
                             <span className="nome-heroi">{e.name}</span>
-                            <img src={`${e.thumbnail.path}.${e.thumbnail.extension}`} alt="" />
-                            <button onClick={() => { addFavoritos(e.id) }}> Favoritos </button>
+                            <img onClick={() => { abrirModal(e.name, e.imagem, e.extensao, e.descricao) }} src={`${e.thumbnail.path}.${e.thumbnail.extension}`} alt="" />
+                            <button onClick={() => { addFavoritos(e.id, e.name, e.thumbnail.path, e.description, e.thumbnail.extension) }}> Favoritos </button>
                         </div>)
 
                     )
@@ -83,14 +119,14 @@ const TelaDoUsuario = ({ match }) => {
         }
     }
 
-    const mostrarTodosHerois = (event) => {
+    const mostrarTodosHerois = () => {
         let arquivo = []
         dados.map(e => {
             return (
                 arquivo.push(<div className="card-heroi">
                     <span className="nome-heroi">{e.name}</span>
-                    <img src={`${e.thumbnail.path}.${e.thumbnail.extension}`} alt="" />
-                    <button onClick={() => { addFavoritos(e.id) }}> Favoritos </button>
+                    <img onClick={() => { abrirModal(e.name, e.thumbnail.path, e.thumbnail.extension, e.description) }} src={`${e.thumbnail.path}.${e.thumbnail.extension}`} alt="" />
+                    <button onClick={() => { addFavoritos(e.id, e.name, e.thumbnail.path, e.description, e.thumbnail.extension) }}> Favoritos </button>
                 </div>))
 
         })
@@ -98,6 +134,24 @@ const TelaDoUsuario = ({ match }) => {
         setResultados(arquivo)
 
     }
+
+
+    const abrirModal = (name, imagem, extensao, descricao) => {
+
+        setIsOpen(true);
+        setBanco(
+            <div className="modal">
+                <img className="modal-img" src={`${imagem}.${extensao}`} alt="" />
+                <div className=" nome-descricao">
+                    <span className="nome-heroi">{name}</span>
+                    <span>{descricao}</span>
+                    <button onClick={closeModal}>close</button>
+                </div>
+            </div>
+        )
+
+    }
+
 
 
     let historia = useHistory()
@@ -114,7 +168,7 @@ const TelaDoUsuario = ({ match }) => {
         <div className="tela-inteira">
 
             <header className="menu">
-                <span >inicio</span>
+                <h1>Explore</h1>
                 <span onClick={() => { irParaFavoritos(id) }}>Meus Favoritos</span>
             </header>
 
@@ -140,9 +194,30 @@ const TelaDoUsuario = ({ match }) => {
                     {resultados}
                 </div>
 
+                <div>
+                    {/* <button onClick={openModal}>Open Modal</button> */}
+                    <Modal
+                        isOpen={modalIsOpen}
+                        onAfterOpen={afterOpenModal}
+                        onRequestClose={closeModal}
+                        style={customStyles}
+                        contentLabel="Example Modal"
+                    >
+
+
+
+                        <h2 ref={_subtitle => (subtitle = _subtitle)}>Caracteristicas</h2>
+
+                        <div>{banco}</div>
+
+                    </Modal>
+                </div>
+
             </div>
 
         </div>
+
+
 
 
     )
