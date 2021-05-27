@@ -75,6 +75,7 @@
     margin: 0 auto;
     margin-top: 20px;
     padding: 10px;
+    height: 75px;
     width: 50%;
     color: #ffffff;
 }
@@ -140,6 +141,31 @@
     text-align: center;
     border: solid 2px;
    
+}
+
+@media(max-width:600px){
+
+    .pesquisa{
+    
+        display: flex;
+        background-color:#ffffff;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 50%;
+        height: 20%;
+        border-radius: 10px;
+        border: solid 2px;
+    }
+
+    .pesquisa button{
+        background-color:black;
+        margin: 0 auto;
+        margin-top: 20px;
+        padding: 5px;
+        min-width: 150px;
+        color: #ffffff;
+    }
+
 }
 
 
