@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import "./style.css"
 import { Link, useHistory, useParams } from 'react-router-dom'
+import imagem from "../../imagens/marvel.jpeg"
 
 
 const Login = () => {
@@ -56,9 +57,12 @@ const Login = () => {
 
         <div className="telaLogin">
 
-            <h1>Faça o seu login</h1>
+            <img src={imagem} alt="" />
+
+            <h1>Comics</h1>
 
             <div className="entradasLogin" >
+                <span> Faça o seu login</span>
                 <input onInput={(e) => { campoNome(e) }} placeholder="Usuario" />
                 <input onInput={(e) => { campoSenha(e) }} placeholder="Senha" />
                 <button onClick={() => {

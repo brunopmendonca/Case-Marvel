@@ -8,7 +8,16 @@
     height: 100vh;
     width: 100;
    
+}
 
+.telaLogin img{
+    display: none;
+}
+
+.telaLogin h1{
+    display: none;
+    color: #fff;
+    font-size: 40px;
 }
 
 .entradasLogin{
@@ -21,11 +30,13 @@
     height: 20%;
     padding: 100px 50px 100px 50px;
     border-radius: 10px;
+    text-align: center;
 }
 
 .entradasLogin input{
     padding: 5px;
-    margin-top: 7px;
+    margin-top: 8px;
+    border: solid 2p black;
 }
 
 .entradasLogin button{
@@ -35,11 +46,70 @@
     margin-top: 5px;
     width: 100%;
     color: #fff;
+    margin-top: 8px;
     
 }
+
+.entradasLogin span{
+    color: #fff;
+    font-size: 20px;
+    
+}
+
+
 
 .botao-cadastro{
     margin-top: 7px;
     color:#fff;
 }
 
+@media(max-width:600px){
+
+    .telaLogin{
+        display: flex;
+        background:red;
+        background-size: cover;
+        flex-direction: column;
+        justify-content: center ;
+        align-items: center;
+        height: 100vh;
+        width: 100;
+        border: solid 2px black;
+       
+    }
+
+    .entradasLogin{
+    
+        display: flex;
+        background-color:#fff;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 50%;
+        height: 20%;
+        padding: 100px 50px 100px 50px;
+        border-radius: 10px;
+        border: solid 2px black;
+    }
+
+    .telaLogin img{
+        display: block;
+        max-width: 70%;
+    }
+
+
+.telaLogin h1{
+    display: block;
+    color: #fff;
+    font-size: 40px;
+}
+
+.entradasLogin span{
+    color:black;
+    font-size: 20px;
+    
+}
+
+
+
+        
+}
