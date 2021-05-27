@@ -21,7 +21,8 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "node Controler.js"
+    "start": "node Controler.js",
+    "build": "react-scripts build"
   },
   "eslintConfig": {
     "extends": [
