@@ -1,6 +1,6 @@
 .telaLogin{
     display: flex;
-    /* background: url('../../imagens/login.jpeg') no-repeat bottom center scroll; */
+    background: url('../../imagens/login.jpeg') no-repeat bottom center scroll;
     background-size: cover;
     flex-direction: column;
     justify-content: center ;
@@ -14,13 +14,13 @@
 .entradasLogin{
     
     display: flex;
-    /* background-color:rgba(8, 8, 8, 0.4); */
+    background-color:rgba(8, 8, 8, 0.4);
     flex-direction: column;
     justify-content: space-around;
     width: 20%;
     height: 20%;
     padding: 100px 50px 100px 50px;
-    /* border-radius: 10px; */
+    border-radius: 10px;
 }
 
 .entradasLogin input{
