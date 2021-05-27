@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import "./style.css"
 import { useHistory, useParams } from 'react-router-dom'
+import imagem from "../../imagens/marvel.jpeg"
 // import { useState } from 'react'
 
 
@@ -64,6 +65,8 @@ const Cadastro = ({ match }) => {
 
 
         <div className="telaCadastro">
+
+            <img src={imagem} />
 
             <h1>Cadastre -se {id} </h1>
             <div className="entradasCadastro" >
