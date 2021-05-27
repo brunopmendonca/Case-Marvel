@@ -24,7 +24,7 @@ const Login = () => {
 
     async function irParaPerfil() {
 
-        let response = await fetch("http://localhost:3001/login", {
+        let response = await fetch("https://case-marvel.herokuapp.com/login", {
             method: 'POST',
             headers: {
                 Accept: 'application/json',

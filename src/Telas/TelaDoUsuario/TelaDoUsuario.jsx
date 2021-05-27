@@ -77,7 +77,7 @@ const TelaDoUsuario = ({ match }) => {
 
     const addFavoritos = async (numberId, name, imagem, descricao, extensao) => {
 
-        let response = await fetch("http://localhost:3001/adicionarFavorito", {
+        let response = await fetch("https://case-marvel.herokuapp.com/adicionarFavorito", {
             method: 'POST',
             headers: {
                 Accept: 'application/json',

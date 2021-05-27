@@ -68,7 +68,7 @@ const Favoritos = ({ match }) => {
     }, [])
 
     useEffect(async () => {
-        let response = await fetch("http://localhost:3001/mostrarFavoritos", {
+        let response = await fetch("https://case-marvel.herokuapp.com/mostrarFavoritos", {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
