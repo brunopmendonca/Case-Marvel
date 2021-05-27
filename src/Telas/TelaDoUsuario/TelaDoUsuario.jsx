@@ -7,7 +7,7 @@ import Img from '../../imagens/marvel.jpeg'
 import axios from 'axios'
 import md5 from 'md5'
 
-const baseUrl = "http://gateway.marvel.com/v1/public/characters?"
+const baseUrl = "https://gateway.marvel.com/v1/public/characters?"
 const chavePublica = "1ea11679ab11b65382e9487268b363a7"
 const chavePrivada = "1f2e853ae3b37850fddf90a55e205e48ee6a0faa"
 
