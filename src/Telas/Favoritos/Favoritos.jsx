@@ -124,7 +124,7 @@ const Favoritos = ({ match }) => {
 
 
     const deletarFavoritos = async (numberId) => {
-        let response = await fetch("http://localhost:3001/deletarFavorito", {
+        let response = await fetch("https://case-marvel.herokuapp.com/deletarFavorito", {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
