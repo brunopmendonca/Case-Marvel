@@ -169,7 +169,7 @@ const TelaDoUsuario = ({ match }) => {
             <header className="menu">
                 <span >inicio</span>
                 <img src={Img} alt="" />
-                <span onClick={() => { irParaFavoritos(id) }}>Meus Favoritos</span>
+                <span onClick={() => { irParaFavoritos(id) }}>Favoritos</span>
             </header>
 
             <div className="telaUsuario">
