@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import "./TelaDoUsuario.css"
 import Modal from 'react-modal'
+import Img from '../../imagens/marvel.jpeg'
 
 import axios from 'axios'
 import md5 from 'md5'
-
 
 const baseUrl = "http://gateway.marvel.com/v1/public/characters?"
 const chavePublica = "1ea11679ab11b65382e9487268b363a7"
@@ -14,13 +14,13 @@ const chavePrivada = "1f2e853ae3b37850fddf90a55e205e48ee6a0faa"
 const time = Number(new Date())
 const hash = md5(time + chavePrivada + chavePublica)
 
-
 const TelaDoUsuario = ({ match }) => {
 
     const [dados, setDados] = useState([])
     const [pesquisa, setPesquisa] = useState()
     const [resultados, setResultados] = useState()
     const [banco, setBanco] = useState()
+    const [cardstyle, setCardStyle] = useState("card-heroi")
 
     const { id } = useParams()
 
@@ -123,8 +123,8 @@ const TelaDoUsuario = ({ match }) => {
         let arquivo = []
         dados.map(e => {
             return (
-                arquivo.push(<div className="card-heroi">
-                    <span className="nome-heroi">{e.name}</span>
+                arquivo.push(<div className={cardstyle}>
+                    <span onClick={() => { mudarEstado() }} className="nome-heroi">{e.name}</span>
                     <img onClick={() => { abrirModal(e.name, e.thumbnail.path, e.thumbnail.extension, e.description) }} src={`${e.thumbnail.path}.${e.thumbnail.extension}`} alt="" />
                     <button onClick={() => { addFavoritos(e.id, e.name, e.thumbnail.path, e.description, e.thumbnail.extension) }}> Favoritos </button>
                 </div>))
@@ -135,6 +135,11 @@ const TelaDoUsuario = ({ match }) => {
 
     }
 
+    const mudarEstado = () => {
+        console.log(cardstyle)
+        setCardStyle("card-ampliado")
+        mostrarTodosHerois()
+    }
 
     const abrirModal = (name, imagem, extensao, descricao) => {
 
@@ -149,10 +154,7 @@ const TelaDoUsuario = ({ match }) => {
                 </div>
             </div>
         )
-
     }
-
-
 
     let historia = useHistory()
 
@@ -161,14 +163,12 @@ const TelaDoUsuario = ({ match }) => {
     }
 
 
-
-
     return (
-
         <div className="tela-inteira">
 
             <header className="menu">
-                <h1>Explore</h1>
+                <span >inicio</span>
+                <img src={Img} alt="" />
                 <span onClick={() => { irParaFavoritos(id) }}>Meus Favoritos</span>
             </header>
 
@@ -186,8 +186,8 @@ const TelaDoUsuario = ({ match }) => {
                         mostrarTodosHerois(event)
                     }} > Mostrar todos os herois </button>
                 </div>
-
-                {/* <h1>{dados[0].name}</h1> */}
+                {/* 
+                <h1>{dados[0].name}</h1> */}
 
 
                 <div className="tela-cards">
@@ -215,7 +215,7 @@ const TelaDoUsuario = ({ match }) => {
 
             </div>
 
-        </div>
+        </div >
 
 
 
