@@ -107,7 +107,7 @@ app.post("/deletarfavorito", async (req, res) => {
 
 
 
-let port = process.env.PORT || 3001
+let port = process.env.PORT
 
 app.listen(port, (req, res) => {
     console.log("servidor rodando")

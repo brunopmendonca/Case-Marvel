@@ -1,22 +1,21 @@
 {
   "files": {
-    "main.css": "/static/css/main.77754a19.chunk.css",
-    "main.js": "/static/js/main.06af0bb0.chunk.js",
-    "main.js.map": "/static/js/main.06af0bb0.chunk.js.map",
+    "main.css": "/static/css/main.e7c3bc64.chunk.css",
+    "main.js": "/static/js/main.4765e211.chunk.js",
+    "main.js.map": "/static/js/main.4765e211.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.4e1a20a1.js",
     "runtime-main.js.map": "/static/js/runtime-main.4e1a20a1.js.map",
     "static/js/2.b7d92b1d.chunk.js": "/static/js/2.b7d92b1d.chunk.js",
     "static/js/2.b7d92b1d.chunk.js.map": "/static/js/2.b7d92b1d.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.77754a19.chunk.css.map": "/static/css/main.77754a19.chunk.css.map",
+    "static/css/main.e7c3bc64.chunk.css.map": "/static/css/main.e7c3bc64.chunk.css.map",
     "static/js/2.b7d92b1d.chunk.js.LICENSE.txt": "/static/js/2.b7d92b1d.chunk.js.LICENSE.txt",
-    "static/media/style.css": "/static/media/login.d3dc384e.jpeg",
     "static/media/marvel.d488ed61.jpeg": "/static/media/marvel.d488ed61.jpeg"
   },
   "entrypoints": [
     "static/js/runtime-main.4e1a20a1.js",
     "static/js/2.b7d92b1d.chunk.js",
-    "static/css/main.77754a19.chunk.css",
-    "static/js/main.06af0bb0.chunk.js"
+    "static/css/main.e7c3bc64.chunk.css",
+    "static/js/main.4765e211.chunk.js"
   ]
 }
